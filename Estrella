@@ -1,0 +1,34 @@
+void algorisme_Aestrella()
+{
+	airport *aux2=getAeropuerto(aeroport_final);
+	inicialitzaLlista();
+
+	//mentres la llista 1 no estigui buida o ja hàgim trobat el millor camí
+	while ((cerca.firstconnexio!=NULL) && (cerca.firstconnexio->camino.connexions[(cerca.firstconnexio->camino.connexions_totals)-1]!=aeroport_final))
+	{
+		MostraCamins();
+		//a)Treure el primer cami de la llista
+		TreureCami();
+		//b) Expandir el cami obtingut al pas anterior
+		expandir(aux2); //li passes l'aeroport de desti per calcular l'heuristica
+		//c) eliminarCicles -> ja es te en compte a l'hora d'expandir
+		if (cerca2.firstconnexio!=NULL) //perquè voldrà dir que hi havia un cicle
+		{
+			//d) eliminar camins redundants
+			eliminarCaminsRedundants();
+			//e) ordenar la llista
+			ordenarLlista();
+		}
+	}
+	if (cerca.firstconnexio==NULL)
+	{
+		cout<<"NO HI HA CAMINS POSSIBLES"<<endl;
+//		system("pause");
+	}
+	else
+	{
+		mostraRutaFinal();
+		anar_menu();
+	}
+
+}
